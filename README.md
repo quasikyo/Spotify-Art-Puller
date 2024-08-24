@@ -1,15 +1,21 @@
-# Spotify Art Puller (Final Version)
+# Spotify Art Puller
+This script fetches album art from Spotify using the Spotipy library and resizes the image using the Python Imaging Library (PIL) or OpenCV (cv2).
 
-# Spotify_Album4: Album Art Fetcher with PIL for Image Resizing
 
-This script fetches album art from Spotify using the Spotipy library and resizes the image using the Python Imaging Library (PIL). It checks for necessary packages and installs any missing ones. 
-It then asks for your Spotify credentials and uses them to fetch album art for a specified artist and album. The image is resized using PIL's LANCZOS filter, which is a high-quality downsampling filter.
+## Setup
+```
+git clone https://github.com/quasikyo/Spotify-Art-Puller
+cd Spotify-Art-Puller
+python -m venv venv
+source venv/Scripts/activate
+pip install -r requirements.txt
+```
+Creating a virtual environment isn't necessary, but it is strongly recommended.
 
-# Spotify_Album4CV: Album Art Fetcher with OpenCV for Image Resizing
-
-This script is very similar to the first one but uses OpenCV (cv2) instead of PIL for image resizing. OpenCV provides more advanced image processing capabilities and might give better results when resizing images.
-
-# How to Use
+## Running
+```
+python main.py
+```
 
 1. Run the script in your Python environment.
 2. When prompted, enter your Spotify client ID and client secret.
