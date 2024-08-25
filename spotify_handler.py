@@ -2,6 +2,7 @@ from fuzzywuzzy import fuzz
 import json
 import os
 import spotipy
+from typing import Optional
 
 CLIENT_ID = 'client_id'
 CLIENT_SECRET = 'client_secret'
@@ -11,12 +12,12 @@ class SpotifyCredentialsLoadError(Exception):
 	pass
 
 
-def get_album_art_url(credentials: dict[str, str], artist_search: str, album_search: str):
+def get_album_art_url(credentials: dict[str, str], artist_search: str, album_search: str) -> Optional[str]:
 	spotify_credentials = spotipy.SpotifyClientCredentials(**credentials)
-	spotify_client = spotipy.Spotify(spotify_credentials)
+	spotify_client = spotipy.Spotify(client_credentials_manager=spotify_credentials)
 
 	artists = spotify_client.search(q=f'artist:{artist_search}', type='artist')
-	artist_match = _get_best_match(artists['artists']['items'], 'artist', artist_search)
+	artist_match = _get_best_match(artists['artists']['items'], 'name', artist_search)
 	if not artist_match:
 		return None
 
@@ -28,7 +29,7 @@ def get_album_art_url(credentials: dict[str, str], artist_search: str, album_sea
 	return album_match['images'][0]['url']
 
 
-def _get_best_match(results, result_field: str, search: str):
+def _get_best_match(results, result_field: str, search: str) -> Optional[dict]:
 	best_match = None
 	highest_score = 0
 	for result in results:
@@ -94,8 +95,8 @@ def load_credentials(file_path: str) -> dict[str, str]:
 		credentials = json.load(file)
 
 	if CLIENT_ID not in credentials:
-		raise SpotifyCredentialsLoadError(f'{CLIENT_ID} not found')
+		raise SpotifyCredentialsLoadError(f'{CLIENT_ID} not found.')
 	if CLIENT_SECRET not in credentials:
-		raise SpotifyCredentialsLoadError(f'{CLIENT_SECRET} not found')
+		raise SpotifyCredentialsLoadError(f'{CLIENT_SECRET} not found.')
 
 	return credentials
