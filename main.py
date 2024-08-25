@@ -80,6 +80,7 @@ if __name__ == '__main__':
 		print(e)
 
 	if credentials is None:
+		# TODO: implement input for this
 		print('Credentials not found. Exiting...')
 		sys.exit(0)
 
